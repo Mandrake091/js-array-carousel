@@ -25,69 +25,56 @@ const text = [
 let prevButton = document.getElementById('prevButton');
 let nextButton = document.getElementById('nextButton')
 let itemActive = document.getElementById('active');
-let items = document.getElementById('items');
+let thumbContainer = document.getElementById('thumbContainer');
 
+const thumbnails = document.getElementsByClassName('item');
+
+const itemsContainer = document.getElementById('items-container')
 
 
 console.log(itemActive)
 console.log(nextButton)
-console.log(imagesArray)
+
 
 for (let k = 0; k < imagesArray.length; k++) {
-
-    items.innerHTML += `<div class= "item">
-    <img class="w-100" src = "${imagesArray[k]}">
+    thumbContainer.innerHTML += `<div class= "thumbnail">
+    <img class="w-100 d-block" src = "${imagesArray[k]}">
     </div>`
 }
 
+for (let k = 1; k < imagesArray.length; k++) {
+    itemsContainer.innerHTML += `<div class="items d-none">
+    <img class="w-100" src = "${imagesArray[k]}">
+    </div>`
+}
+let items = document.getElementsByClassName('items')
 
 
 
+console.log(items)
+
+console.log(imagesArray)
 
 
-
-nextButton.addEventListener('click', nextImage);
-let i = 1;
-
-function nextImage() {
-
-    if (i <= 4) {
-        itemActive.innerHTML = `
-      <div class= "item">
-          <img class="w-75" src = "${imagesArray[i]}">
-          </div>`
-
-        i++
-
-    } else if (i > 4) {
-        itemActive.innerHTML = `
-      <div class= "item">
-          <img class="w-75" src = "${imagesArray[0]}">
-          </div>`
-        i = 0
-
+let currentIndex = 0;
+nextButton.addEventListener("click", function () {
+    if (currentIndex < 4) {
+        items[currentIndex].classList.add("d-none");
+        items[currentIndex].classList.remove("active"); 
+        currentIndex += 1;
+        items[currentIndex].classList.remove("d-none");
+        items[currentIndex].classList.add("active");
     }
-}
-console.log(i)
 
-prevButton.addEventListener('click', prevImage);
+});
 
+prevButton.addEventListener('click', function () {
 
-console.log(i)
- k=i;
-function prevImage() {
-   
-    if (k < 4) {
-        itemActive.innerHTML = `
-      <div class= "item">
-          <img class="w-75" src = "${imagesArray[k]}">
-          </div>`
-        k--
-        console.log(k)
-    } else if (k == 0) {
-
-        k = 0;
-        }
-    
-}
-console.log(k)
+    if (currentIndex > 0) {
+        items[currentIndex].classList.add("d-none");
+        items[currentIndex].classList.remove("active"); 
+        currentIndex -= 1;
+        items[currentIndex].classList.remove("d-none");
+        items[currentIndex].classList.add("active");
+    }
+})
